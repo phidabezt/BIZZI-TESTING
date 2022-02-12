@@ -17,7 +17,9 @@ Performance:
 + Let the initial input's length is N and the alternative input's length is M.
 + I first loop through the initial input => O(N)
 + I then loop throungh the alternative input => O(M)
-=> O(N + M)
+
+=> Current complexity: O(N + M)
 + Inside the second loop, there is "brackets" (a string store give brackets) that we have to check everytime we hit a bracket. But this is a constant length, and it's small => Doesn't matter that much
 + There is stack, which in my opinion is restricted array. And an array has O(1) complexity to access an element in it, and the fact all we do is just add new element, then pop the lasted one => This one too, doesn't matter that much
-=> Final time complexity is O(N + M) 
+
+=> Final time complexity: O(N + M) 
