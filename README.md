@@ -2,6 +2,7 @@
 for intership interview
 
 Problem 1:
+
 Logic: 
 + First I took out all the brackets in the given input
 + I then check if the length of new input (with brackets only) is 0, if it is then return NO WORRIES
