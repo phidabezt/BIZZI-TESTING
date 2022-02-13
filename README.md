@@ -8,10 +8,10 @@ Logic:
 + I then check if the length of new input (with brackets only) is 0, if it is then return NO WORRIES
 + In the core function (isMatched), I use stack for my solution. The idea is simple, I first have a string with given brackets (opening brackets will be in the even indexes
 and closing brackets will be in the odd indexes). Then loop through the new input...
-  If the current bracket's index is even, which means that we encounter an opening one, I push a corresponding closing bracket in the stack. 
-  If the current bracket's index is odd, which means that we encounter an closing one, I pop an element out of the stack, compare to the current bracket. If they aren't matched,
+  - If the current bracket's index is even, which means that we encounter an opening one, I push a corresponding closing bracket in the stack. 
+  - If the current bracket's index is odd, which means that we encounter an closing one, I pop an element out of the stack, compare to the current bracket. If they aren't matched,
   then return UNMATCHED
-  If the loop end and the stack's length is 0, then return ALL-MATCHING. If not, return UNMATCHED
+  - If the loop end and the stack's length is 0, then return ALL-MATCHING. If not, return UNMATCHED
 
 Performance:
 + Let the initial input's length is N and the alternative input's length is M.
