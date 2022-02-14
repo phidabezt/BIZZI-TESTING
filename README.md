@@ -23,3 +23,17 @@ Performance:
 + There is stack, which in my opinion is restricted array. And an array has O(1) complexity to access an element in it, and the fact all we do is just add new element, then pop the lasted one => This one too, doesn't matter that much
 
 => Final time complexity: O(N + M) 
+
+
+Problem 2:
+
+The main idea: Stream - An approach that has us consume data without being fully loaded. This will seperate the data into chunks, then process it chunk by chunk.
+
++ Stream has a method call Pipping, which connnect multiple streams. Here I have JSONStream parser for turning JSON file in to JS Object in streaming way. Pipe will be the connection between streamming reader and streamming parser.
++ To manipulate those chunk of data, I use function. But if I just call a normal function, it will not receive all of the chunks of data. I call mapSync to create a through stream from this asynchronous function. Which has it know that it's a part a streaming process. And inside this function, I just need to call the value of age to work with the problem.
+
+
+
+
+
+
