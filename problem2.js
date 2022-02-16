@@ -1,18 +1,18 @@
-var fs = require('fs'),
-    JSONStream = require('JSONStream'),
-    es = require('event-stream');
+const fs = require('fs'),
+      JSONStream = require('JSONStream'),
+      es = require('event-stream');
 
-var getStream = function () {
-    var jsonData = 'users.json',
+let getStream = () => {
+    let jsonData = 'users.json',
         stream = fs.createReadStream(jsonData, { encoding: 'utf8'}),
         parser = JSONStream.parse('*');
     return stream.pipe(parser);
 };
 
-var insert = function () {
+let insert = () => {
     getStream()
-    .pipe(es.mapSync(function (data) {
-        for (var item of data) {
+    .pipe(es.mapSync((data) => {
+        for (let item of data) {
             if (item.age > 24) {
                 console.log(item);
             }
@@ -21,3 +21,7 @@ var insert = function () {
 }
 
 insert();
+
+/* 
+    Note: Converted to ES6 (almost)
+*/
