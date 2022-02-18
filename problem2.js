@@ -10,8 +10,14 @@ export const JSONStream = require('JSONStream');
 export const es = require('event-stream');
 
 export const getStream = () => {
-    const jsonData = 'users.json',
-          stream = fs.createReadStream(jsonData, { encoding: 'utf8'}),
+    const jsonData = 'users.json';
+    fs.access(jsonData, fs.F_OK, (err) => {
+        if (err) {
+            console.log(err);
+            return;
+        }
+    });
+    const stream = fs.createReadStream(jsonData, { encoding: 'utf8'}),
           parser = JSONStream.parse('*');
     return stream.pipe(parser);
 };
