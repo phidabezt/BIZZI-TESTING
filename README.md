@@ -32,10 +32,7 @@ The main idea: Stream - An approach that has us consume data without being fully
 + Stream has a method call Pipping, which connnect multiple streams. Here I have JSONStream parser for turning JSON file in to JS Object in streaming way. Pipe will be the connection between streamming reader and streamming parser.
 + To manipulate those chunk of data, I use function. But if I just call a normal function, it will not receive all of the chunks of data. I call mapSync to create a through stream from this asynchronous function. Which has it know that it's a part a streaming process. And inside this function, I just need to call the value of age to work with the problem.
 
-+ Why use "event-stream" library (pros and cons):
-  - The reason why I use "event-stream" is because of mapSync method it has, which turns every outside function into a stream. In our case, the function doesn't need to wait for all the data arrive, because if it waits, the whole idea of stream is a mess. That function need to process as a data chunk comes by at the end of the streaming pipe, letting the output of the JSON parser perfectly fit be to the input of the function.
-  - Pros: Beside everything that any other Async can have, event-stream can add almost anything down to the streaming pipe.
-  - Cons: At the moment, I can't figure out any cons of event-stream except that use have to waste memory to store this module
+
 
 
 

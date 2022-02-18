@@ -1,61 +1,88 @@
-let onlyBracket = (input) => {
+import { rejects } from 'assert';
+import { resolve } from 'path';
+import * as fs from 'fs';
+
+export const brackets = "(){}[]";
+
+export let onlyBracket = (input) => {
     let inputWithBracketOnly = "";
-    let brackets = "(){}[]";
-    for (let i = 0; i < input.length; i++) {
-        if (brackets.indexOf(input[i]) >= 0) {
-            inputWithBracketOnly += input[i];
+    for (const char of input) {
+        if (brackets.includes(char)) {
+            inputWithBracketOnly += char;
         }
     }
     return inputWithBracketOnly;
 }
 
-let isMatched = (input) => {
+export const isMatched = (input) => {
     let inputWithBracketOnly = onlyBracket(input),
-        stack = [],
-        brackets = "(){}[]";
+        stack = [];
+
+    if (inputWithBracketOnly.length === 0) return -1;
+    if (inputWithBracketOnly.length % 2 !== 0) return 0;
     
-    switch (true) {
-        case (inputWithBracketOnly.length === 0): return "NO-WORRIES";
-        
-        case (inputWithBracketOnly.length !== 0): 
-            for (let i = 0; i < inputWithBracketOnly.length; i++) {
-                let bracketsIndex = brackets.indexOf(inputWithBracketOnly[i]);
-        
-                if (bracketsIndex % 2 === 0) {      // Hit openning bracket
-                    stack.push(bracketsIndex + 1);
-                } else {                            // Hit closing bracket
-                    if (stack.pop() !== bracketsIndex) {
-                        return "ALL-MATCHING";
-                    }
-                }
+    for (const char of inputWithBracketOnly) {
+        let bracketsIndex = brackets.indexOf(char);
+
+        if (bracketsIndex % 2 === 0) {      // Hit openning bracket
+            stack.push(bracketsIndex + 1);
+        } else {                            // Hit closing bracket
+            if (stack.pop() !== bracketsIndex) {
+                return 0;
             }
-        case (stack.length === 0): return "UNMATCHED";
+        }
     }
+
+    if (stack.length === 0) return 1;
 }
 
-let main = () => {
+export const main = () => {
     if (process.argv.length < 3) {
-        console.log('Usage: node ' + process.argv[1] + ' FILENAME');
+        console.log(`Usage: node  ${process.argv[1]}  FILENAME`);
         process.exit(1);
     }   
 
-    let fs = require('fs'), 
-        filename = process.argv[2];
-    fs.readFile(filename, 'utf8', function (err, data) {
-        if (err) throw err;
-        let lines = data.split('\n');
-        for (let line of lines) {
-            console.log(isMatched(line));
-        }
+    let filename = process.argv[2];
+    const checkValidFile = new Promise((resolve, reject) => {
+        fs.readFile(filename, 'utf8', function (err, data) {
+            if (err) {
+                reject("Invalid file ...");
+            } else {
+                let lines = data.split('\n');
+                let results = [];
+                for (let line of lines) {
+                    switch(isMatched(line)) {
+                        case -1: 
+                            results.push("NO-WORRIES");
+                            break;
+                        case 0:
+                            results.push("UNMATCHED");
+                            break;
+                        case 1:
+                            results.push("ALL-MATCHING");
+                            break;
+                        default:
+                            results.push("SOMETHING'S WRONG WITH YOUR INPUT");
+                    }
+                }
+                resolve(results);
+            }
+        });
     });
-    //CMD syntax: node problem1.js input.txt
+
+    checkValidFile.then(results=> {
+        for (const result of results) {
+            console.log(result);
+        }
+    }).catch(error => {
+        console.log(error);
+    });
+
     /*
     Note: 
         + Used switch case
         + Converted to ES6 (almost)
-        + Optimized early return by directly points out the string result
+        + Optimized early return
         + Regex ... impossible for me
      */
 }
-
-main();

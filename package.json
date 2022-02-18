@@ -1,4 +1,5 @@
 {
+  "type": "module",
   "dependencies": {
     "event-stream": "^4.0.1",
     "JSONStream": "^1.3.5"
