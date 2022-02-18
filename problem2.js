@@ -1,15 +1,22 @@
-const fs = require('fs'),
-      JSONStream = require('JSONStream'),
-      es = require('event-stream');
+// const fs = require('fs'),
+//       JSONStream = require('JSONStream'),
+//       es = require('event-stream');
 
-let getStream = () => {
-    let jsonData = 'users.json',
-        stream = fs.createReadStream(jsonData, { encoding: 'utf8'}),
-        parser = JSONStream.parse('*');
+import * as fs from 'fs';
+import { createRequire } from 'module';
+
+const require = createRequire(import.meta.url);
+export const JSONStream = require('JSONStream');
+export const es = require('event-stream');
+
+export const getStream = () => {
+    const jsonData = 'users.json',
+          stream = fs.createReadStream(jsonData, { encoding: 'utf8'}),
+          parser = JSONStream.parse('*');
     return stream.pipe(parser);
 };
 
-let insert = () => {
+export let insertUserToJSON = () => {
     getStream()
     .pipe(es.mapSync((data) => {
         for (let item of data) {
@@ -19,8 +26,6 @@ let insert = () => {
         }
     }));
 }
-
-insert();
 
 /* 
     Note: Converted to ES6 (almost)
