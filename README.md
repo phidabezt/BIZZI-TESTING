@@ -1,6 +1,8 @@
 # BIZZI-TESITING
 for intership interview
 
+Use test.js to test
+
 Problem 1:
 
 Logic: 
